@@ -21,15 +21,21 @@ extern uint8_t is_master;
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _ADJUST 3
+#define _NUMPAD 3
+#define _ADJUST 4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  ADJUST,
+  NUMPAD,
+  ADJUST
 };
 
+enum {
+  X_TAP_DANCE_1 = 0,
+};
+#define TAP_L TD(X_TAP_DANCE_1)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -39,52 +45,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  `   |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |LCTRL | LAlt |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
 
  [_QWERTY] = LAYOUT( \
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV, \
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS, \
+  KC_GESC,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, \
+  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
   KC_LCTRL, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT, \
-                             KC_LALT, KC_LGUI,LOWER, KC_SPC,   KC_ENT,   RAISE,   KC_BSPC, KC_DEL \
+  KC_LSPO,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC, \
+                             KC_LALT, KC_LGUI, TAP_L, KC_SPC,   KC_ENT,   RAISE,   KC_BSPC, KC_DEL \
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      | BSPC |  DEL |                    |      |      |      |      |      |      |
+ * | F11  |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   -  |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |   _  |   +  |   {  |   }  |   |  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |LCTRL | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
 [_LOWER] = LAYOUT( \
-  _______, _______, _______, _______, KC_BSPC, KC_DEL,                   _______, _______, _______,_______, _______, _______,\
-  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                    KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, \
-  KC_GRV, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD, \
-  _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
+  KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12, \
+  _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,\
+  KC_GRV, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD, \
+  _______, _______, _______, _______, _______, _______, _______, _______,  XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
                              _______, KC_LGUI, _______, _______, _______,  _______, _______, _______\
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   6  |   7  |   8  |   9  |   0  |                    | PSSR | HOME | PgDn | PgUp | End  |      |
+ * |      |      |      |      |      |      |                    |      | HOME |  Up  | End  | PgUp |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      | Left | Down |  Up  |Right |      |
+ * |      |      |      |      |      |      |-------.    ,-------|      | Left | Down |Right | PgDn |      |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
+ * |      |      |      |      |      |      |-------|    |-------|   +  |   -  |   *  |   /  |  =   |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
  *                   |      |      |      |/       /         \      \ |      |      |      |
@@ -92,10 +98,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_RAISE] = LAYOUT( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        _______, _______, _______, _______, _______, _______, \
-  XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                        KC_PSCR, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, \
-  _______, _______, _______, _______, _______, _______,                     XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, \
-  _______, _______, _______, _______, _______, _______,  _______, _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
+  _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,\
+  _______, _______, _______, _______, _______, _______,                     _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP, _______, \
+  _______, _______, _______, _______, _______, _______,                     _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, _______, \
+  _______, _______, _______, _______, _______, _______,  _______, _______,  KC_PPLS, KC_PMNS, KC_PAST, KC_PSLS, KC_EQL,  _______, \
+                             _______, _______, _______,  _______, _______,  _______, _______, _______ \
+),
+/* NUMPAD
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |      |      |      |      |      |                    |      |  7   |  8   |  9   |  -   |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |                    |      |  4   |  5   |  6   |  +   |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |-------.    ,-------|      |  1   |  2   |  3   |  *   |      |
+ * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |-------|    |-------|      |  0   |  =   |  .   |  /   |      |
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
+ *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   `----------------------------'           '------''--------------------'
+ */
+
+[_NUMPAD] = LAYOUT( \
+  _______, _______, _______, _______, _______, _______,                     XXXXXXX, KC_7,    KC_8,    KC_9,   KC_PMNS, _______, \
+  _______, _______, _______, _______, _______, _______,                     XXXXXXX, KC_4,    KC_5,    KC_6,   KC_PPLS, _______, \
+  _______, _______, _______, _______, _______, _______,                     XXXXXXX, KC_1,    KC_2,    KC_3,   KC_PAST, _______, \
+  _______, _______, _______, _______, _______, _______,  _______, _______,  _______, KC_0,    KC_EQL,  KC_DOT, KC_PSLS, _______, \
                              _______, _______, _______,  _______, _______,  _______, _______, _______ \
 ),
 /* ADJUST
@@ -108,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| DEL  |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
@@ -236,3 +264,68 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+// Tap danceの設定
+enum {
+  SINGLE_TAP = 1,
+  SINGLE_HOLD = 2,
+  DOUBLE_TAP = 3,
+};
+
+typedef struct {
+  bool is_press_action;
+  int state;
+} tap;
+
+int cur_dance (qk_tap_dance_state_t *state) {
+  if (state->count == 1) {
+    if (!state->pressed) return SINGLE_TAP;
+    else return SINGLE_HOLD;
+  }
+  else if (state->count == 2) {
+    return DOUBLE_TAP;
+  }
+  else return 6; //magic number. At some point this method will expand to work for more presses
+}
+
+//instanalize an instance of 'tap' for the 'x' tap dance.
+static tap xtap_state = {
+  .is_press_action = true,
+  .state = 0
+};
+
+void x_finished_1 (qk_tap_dance_state_t *state, void *user_data) {
+  xtap_state.state = cur_dance(state);
+  switch (xtap_state.state) {
+    case SINGLE_TAP:                     // 単押しで「英数」と「無変換」　Lowerレイヤーがトグルされている場合はレイヤーをオフにする
+        if (IS_LAYER_ON(_NUMPAD)){
+            layer_off(_NUMPAD);
+        } else {
+            SEND_STRING(SS_LALT("`"));
+        }
+        break;
+    case SINGLE_HOLD:                   // 長押しでLowerレイヤーをオンにする
+        layer_on(_LOWER);
+        break;
+    case DOUBLE_TAP:                    // ダブルタップでLowerレイヤーをトグル
+        layer_invert(_NUMPAD);
+        break;
+  }
+}
+
+void x_reset_1 (qk_tap_dance_state_t *state, void *user_data) {
+  switch (xtap_state.state) {
+    case SINGLE_TAP:
+        break;
+    case SINGLE_HOLD:
+        layer_off(_LOWER);
+        break;
+    case DOUBLE_TAP:
+        break;
+  }
+  xtap_state.state = 0;
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+ [X_TAP_DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, x_finished_1, x_reset_1),
+};
